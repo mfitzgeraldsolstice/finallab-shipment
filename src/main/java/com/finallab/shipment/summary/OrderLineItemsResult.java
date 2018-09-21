@@ -3,7 +3,7 @@ package com.finallab.shipment.summary;
 public class OrderLineItemsResult {
 
     private Long id;
-    private ProductResult product;
+    private Long productId;
     private Long quantity;
     private Double price;
     private Double totalPrice;
@@ -13,10 +13,10 @@ public class OrderLineItemsResult {
     public OrderLineItemsResult() {
     }
 
-    public OrderLineItemsResult(Long id, ProductResult product, Long quantity, Double price, Double totalPrice,
+    public OrderLineItemsResult(Long id, Long productId, Long quantity, Double price, Double totalPrice,
                                 Long orderId, Long shipmentId) {
         this.id = id;
-        this.product = product;
+        this.productId = productId;
         this.quantity = quantity;
         this.price = price;
         this.totalPrice = totalPrice;
@@ -32,12 +32,12 @@ public class OrderLineItemsResult {
         this.id = id;
     }
 
-    public ProductResult getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(ProductResult product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public Long getQuantity() {

@@ -1,19 +1,20 @@
 package com.finallab.shipment.summary;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class ShipmentDetails {
 
     private Long id;
     private Long orderNumber;
-    private Date shippedDate;
-    private Date deliveryDate;
+    private Calendar shippedDate;
+    private Calendar deliveryDate;
     private OrderLineItemsResult orderLineItem;
 
     public ShipmentDetails() {
     }
 
-    public ShipmentDetails(Long id, Long orderNumber, Date shippedDate, Date deliveryDate, OrderLineItemsResult orderLineItem) {
+    public ShipmentDetails(Long id, Long orderNumber, Calendar shippedDate, Calendar deliveryDate, OrderLineItemsResult orderLineItem) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.shippedDate = shippedDate;
@@ -37,19 +38,19 @@ public class ShipmentDetails {
         this.orderNumber = orderNumber;
     }
 
-    public Date getShippedDate() {
+    public Calendar getShippedDate() {
         return shippedDate;
     }
 
-    public void setShippedDate(Date shippedDate) {
+    public void setShippedDate(Calendar shippedDate) {
         this.shippedDate = shippedDate;
     }
 
-    public Date getDeliveryDate() {
+    public Calendar getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(Calendar deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 

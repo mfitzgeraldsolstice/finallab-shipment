@@ -43,7 +43,9 @@ public class ShipmentService {
         OrderLineItemsResult itemToUpdate = orderLineItemsService.getOrderLineItemsById(shipment.getOrderLineItem());
         if(itemToUpdate != null){
             itemToUpdate.setShipmentId(shipment.getId());
-            orderLineItemsService.updateOrderLineItem(itemToUpdate);
+            itemToUpdate.setId(itemToUpdate.getId());
+            OrderLineItemsResult updatedLineItem = orderLineItemsService.updateOrderLineItem(itemToUpdate);
+            System.out.println(updatedLineItem);
         }
         return savedShipment;
     }
@@ -72,7 +74,11 @@ public class ShipmentService {
             lineItemsList.add(temp);
 
             ShipmentDetails tempShipment = new ShipmentDetails();
-            tempShipment.setOrderNumber(temp.getOrderId());
+            if(temp.getOrderId() != null){
+                tempShipment.setOrderNumber(temp.getOrderId());
+
+            }
+            //tempShipment.setOrderNumber(temp.getOrderId());
             tempShipment.setDeliveryDate(shipments.get(i).getDeliveryDate());
             tempShipment.setShippedDate(shipments.get(i).getShippedDate());
             tempShipment.setOrderLineItem(temp);

@@ -7,6 +7,7 @@ import com.finallab.shipment.summary.ShipmentSummary;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,13 +53,13 @@ public class Shipment {
     //@JoinColumn(name = "shipment_id")
     private Long orderLineItem;
 
-    private Date shippedDate;
-    private Date deliveryDate;
+    private Calendar shippedDate;
+    private Calendar deliveryDate;
 
     public Shipment() {
     }
 
-    public Shipment(Long id, Long accountId, Long shippingAddressId, Long orderLineItem, Date shippedDate, Date deliveryDate) {
+    public Shipment(Long id, Long accountId, Long shippingAddressId, Long orderLineItem, Calendar shippedDate, Calendar deliveryDate) {
         this.id = id;
         this.accountId = accountId;
         this.shippingAddressId = shippingAddressId;
@@ -83,11 +84,11 @@ public class Shipment {
         this.accountId = accountId;
     }
 
-    public Long getShippingAddress() {
+    public Long getShippingAddressId() {
         return shippingAddressId;
     }
 
-    public void setShippingAddress(Long shippingAddress) {
+    public void setShippingAddressId(Long shippingAddressId) {
         this.shippingAddressId = shippingAddressId;
     }
 
@@ -100,19 +101,19 @@ public class Shipment {
         this.orderLineItem = orderLineItem;
     }
 
-    public Date getShippedDate() {
+    public Calendar getShippedDate() {
         return shippedDate;
     }
 
-    public void setShippedDate(Date shippedDate) {
+    public void setShippedDate(Calendar shippedDate) {
         this.shippedDate = shippedDate;
     }
 
-    public Date getDeliveryDate() {
+    public Calendar getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(Calendar deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 }

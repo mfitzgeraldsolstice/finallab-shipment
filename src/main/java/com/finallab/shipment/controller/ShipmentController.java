@@ -6,6 +6,7 @@ import com.finallab.shipment.summary.ShipmentDetails;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Path;
@@ -20,7 +21,8 @@ public class ShipmentController {
 
     ShipmentService shipmentService;
 
-    ShipmentController(ShipmentService shipmentService){
+    public ShipmentController(ShipmentService shipmentService)
+    {
         this.shipmentService = shipmentService;
     }
 
@@ -33,15 +35,16 @@ public class ShipmentController {
 
     @GetMapping("/{id}")
     @HystrixCommand(fallbackMethod = "getShipmentFallback")
-    public Shipment get(@PathVariable("id") Long id){
+    public Shipment get(@PathVariable("id") Long id, Model model){
         Shipment result = shipmentService.get(id);
+        model.addAttribute("shipment", result);
         return result;
     }
 
-    @GetMapping("/account/{accountId}")
-    @HystrixCommand(fallbackMethod = "getShipmentByAccountIdFallback")
-    public List<Shipment> getShipmentsByAccountId(@PathVariable("accountId") Long id){
-        List<Shipment> result = shipmentService.getShipmentsByAccountId(id);
+    @GetMapping("/shipments/{accountId}")
+    @HystrixCommand(fallbackMethod = "getShipmentsByAccountIdFallback")
+    public List<Shipment> getShipmentsByAccountId(@PathVariable("accountId") Long accountId){
+        List<Shipment> result = shipmentService.getShipmentsByAccountId(accountId);
         return result;
     }
 
@@ -58,10 +61,12 @@ public class ShipmentController {
         shipmentService.delete(shipment);
     }
 
-    @GetMapping("/shipments/{accountId}")
+    @GetMapping("/shipments/{accountId}/details")
     @HystrixCommand(fallbackMethod = "getShipmentDetailsFallback")
     public List<ShipmentDetails> getShipmentDetailsForAccount(@PathVariable("accountId") Long accountId){
+        System.out.println("in details");
         List<ShipmentDetails> results = shipmentService.getShipmentDetailsForAccount(accountId);
+        System.out.println(results.get(0).getId());
         return results;
     }
 
@@ -70,14 +75,14 @@ public class ShipmentController {
         return new Shipment();
     }
 
-    public Shipment getShipmentFallback(Shipment shipment){
-        logger.error("Error getting shipment: " + shipment);
+    public Shipment getShipmentFallback(Long id){
+        logger.error("Error getting shipment: " + id);
         return new Shipment();
     }
 
-    public Shipment getShipmentByAccountIdFallback(Shipment shipment){
-        logger.error("Error getting shipment by account id: " + shipment);
-        return new Shipment();
+    public List<Shipment> getShipmentsByAccountIdFallback(Long accountId){
+        logger.error("Error getting shipment by account id: " + accountId);
+        return new ArrayList<>();
     }
 
     public Shipment updateShipmentFallback(Shipment shipment){
@@ -90,8 +95,8 @@ public class ShipmentController {
         return new Shipment();
     }
 
-    public List<ShipmentDetails> getShipmentDetailsFallback(List<ShipmentDetails> shipmentDetails){
-        logger.error("Error getting shipment details: " + shipmentDetails);
+    public List<ShipmentDetails> getShipmentDetailsFallback(Long accountId){
+        logger.error("Error getting shipment details: " + accountId);
         return new ArrayList<>();
     }
 
